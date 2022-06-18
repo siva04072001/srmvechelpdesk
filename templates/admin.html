@@ -1,0 +1,263 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!---------end of table--------------->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <!-- semantic UI -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+     <link type="image/png" sizes="16x16" rel="icon" href="{% static 'imgs/icons8-delete-ticket-16.png' %}">
+     <!---AOS-->
+     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+     <!--Chart js-->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+
+<!---manual css-->
+<link href="{% static 'style.css' %}" rel="stylesheet">
+<link href="{% static 'active-ticket.css' %}" rel="stylesheet">
+
+
+
+    </head>
+
+<body>
+  <div class="desk-container">
+    <div class="desk-navigation">
+        <div class="logo-section">
+            <span class="icon">
+                <img src="{% static 'SRMVEClogo.png' %}" alt="">
+            </span>
+            <span class="logo-title">SRM VEC DESK</span>
+        </div>
+        <ul>
+            <a data-toggle="modal" data-target="#userModal"><li>
+                <div class="user">
+                    <img src="{% static 'imgs/customer01.jpg' %}" alt="">
+                </div>
+                <div class="user-name">
+                    <p>{{ user.username }}</p>
+                </div>
+            </li>
+            </a>
+
+            <li>
+                <a href="{% url 'admin' %}" >
+                    <span class="icon">
+                        <ion-icon name="keypad-outline"></ion-icon>
+                    </span>
+                    <span class="title">Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'admintable' %}">
+                    <span class="icon">
+                        <ion-icon name="ticket-outline"></ion-icon>
+                    </span>
+                    <span class="title">Active Tickets</span>
+                </a>
+                
+            </li>
+
+            <li>
+                <a href="{% url 'adminclosed' %}">
+                    <span class="icon">
+                        <ion-icon name="close-circle-outline"></ion-icon>
+                    </span>
+                    <span class="title">Closed Tickets</span>
+                </a>
+                
+            </li>
+
+            <li>
+                <a href="{% url 'user_detail' %}">
+                    <span class="icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </span>
+                    <span class="title">User Details</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'stats' %}">
+                    <span class="icon">
+                        <ion-icon name="stats-chart-outline"></ion-icon>
+                    </span>
+                    <span class="title">Engineer Stats</span>
+                </a>
+            </li>
+
+            <li>
+              <a href="#" data-toggle="modal" data-target="#logoutModal">
+                  <span class="icon">
+                      <ion-icon name="log-out-outline"></ion-icon>
+                  </span>
+                  <span class="title">Logout</span>
+              </a>
+          </li>
+        </ul>
+    </div>
+
+    <!-- ========================= Main ==================== -->
+    <div class="main">
+        <div class="topbar">
+            <!--<div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>-->
+
+
+            <div class="search">
+                <label>
+                    <input type="text" name="sbar" placeholder="Search here">
+                    <ion-icon name="search-outline"></ion-icon>
+                    
+                </label>
+            </div>
+            <div>
+                <p>Log out</p>
+            </div>
+            <div class="user" id="user">
+                <img src="{% static 'imgs/customer01.jpg' %}" alt="">
+            </div>
+            
+        </div>
+  <!----------------------html component----------------------------->
+  <div class="active-details">
+      <div class="recentOrders">
+          <div class="cardHeader">
+              <h2>Active Tickets</h2>
+              <a href="#" class="btn">View All</a>
+          </div>
+          <table id="myTable"> 
+              <thead>
+                  <tr>
+                      <td>Ticket ID</td>
+                      <td>Queries</td>
+                      <td>Requester</td>
+                      <td>Assigned To</td>
+                      <td>Created Date</td>
+                      <td>Due Date</td>
+                      <td>Status</td>
+                      <td>Report</td>
+                      <td>Assign</td>
+                      <td>Close</td>
+                  </tr>
+              </thead>
+
+              <tbody>
+                {% for statuse in tickets %}
+                {% if statuse.status != "closed" %}
+                  <tr>
+                    <th scope="row"> {{ statuse.Id }} </th>
+                    <td> {{ statuse.queries }} </td>
+                    <td> {{ statuse.username }} </td>
+                    <td> {{ statuse.assigned }} </td>
+                    <td> {{ statuse.assigned_date }} </td>
+                    <td> {{ statuse.due_date }} </td>
+                    {% if statuse.status == 'Completed' %}
+                    <td><span>{{ statuse.status }}</span></td>
+                    {% endif %}
+                    {% if statuse.status != 'Completed' %}
+                    <td>{{ statuse.status }}</td>
+                    {% endif %}
+                    <td> <a  href="{% url 'adminreport' statuse.Id %}" >Click</a> </td>
+                    <td> <a  href="{% url 'assign_ticket' statuse.Id %}" type="button" class="assign" style="color:white;">Assign</a> </td>
+                    {% if statuse.status == "Completed" %}
+                    <td> <a  href="{% url 'close_ticket' statuse.Id %}" type="button" class="ticket-close">Close</a> </td>
+                    {% endif %}
+                    {% if statuse.status != "Completed" %}
+                    <td> <button disabled class="btn btn-danger">close</button> </td>
+                    {% endif %}
+                  </tr>
+                  {% endif %}
+      {% endfor %}
+              </tbody>
+          </table>
+      </div>
+     
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+    
+</div>
+<!------------------profile modal----------------------->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" >
+        <div class="modal-header" style="background-color:#292565;">
+          <h5 class="modal-title" id="exampleModalLabel" ><span style="color:white;">Profile</span></h5>
+        </div>
+        <div class="modal-body profile" style="background-color:white; color:black;">
+          <form action="">
+              <h3><span style="color:#292565;">Username:</span> {{ user.username }}</h3>
+              <h3><span style="color:#292565;">Email:</span> {{ user.email }}</h3>
+              <h3><span style="color:#292565;">Phone No:</span> {{ user.mobNo }}</h3>
+              <h3><span style="color:#292565;">Address:</span> {{ user.address }}</h3>
+              <h3><span style="color:#292565;">Designation:</span>{{ user.designation }}</h3>
+          </form>
+        </div>
+        
+        <div class="modal-footer" style="background-color:white;">
+          <div class="cardHeader">
+          
+            <button type="submit" class="btn" data-dismiss="modal">close</button>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+</div>
+<!----------------------------logout modal------------------------->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#292565;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Ready to Leave?</h5>
+                    
+                        
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color:white;">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer" style="background-color:white;">
+                    <a class="btn" type="button" data-dismiss="modal" style="background-color: #c7c7c7a8; color:black;">Cancel</a>
+                    <a class="btn" href="{% url 'logout' %}" style="background-color:#292565; color:white;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" ></script>
+  <script>
+    $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+</body>
+</html>

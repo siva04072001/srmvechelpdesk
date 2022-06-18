@@ -1,0 +1,7 @@
+step 1: activate environment
+        
+	env1\Scripts\activate
+
+step 2:Run server
+ 	
+	python manage.py runserver

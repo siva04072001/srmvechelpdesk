@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'employee-ticket-details.css' %}">
+     <!-- semantic UI -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+     <link type="image/png" sizes="16x16" rel="icon" href=".../icons8-delete-ticket-16.png">
+     <!---AOS-->
+     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+     
+     <!--Chart js-->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="desk-container">
+        <div class="desk-navigation">
+            <div class="logo-section">
+                <span class="icon">
+                    <img src="{% static 'SRMVEClogo.png' %}" alt="">
+                </span>
+                <span class="logo-title">SRM VEC DESK</span>
+            </div>
+            <ul>
+                <a data-toggle="modal" data-target="#userModal"><li class="user-profile">
+                    <div class="user">
+                        <img src="{% static 'imgs/customer01.jpg' %}" alt="">
+                    </div>
+                    <div class="user-name">
+                      <p>{{ user.username }}</p>
+                  </div>
+                </li>
+                </a>
+
+                <li>
+                    <a href="index.html" >
+                        <span class="icon">
+                            <ion-icon name="keypad-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'employee' %}">
+                        <span class="icon">
+                            <ion-icon name="duplicate-outline"></ion-icon>
+                        </span>
+                        <span class="title">New Tickets</span>
+                    </a>
+                    
+                </li>
+
+                <li>
+                    <a href="{% url 'employee_status' %}">
+                        <span class="icon">
+                            <ion-icon name="analytics-outline"></ion-icon>
+                        </span>
+                        <span class="title">Ticket Status</span>
+                    </a>
+                    
+                </li>
+
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#logoutModal">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <!--<div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>-->
+
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+                <div>
+                    <p>Welcome!! {{user.username}}</p>
+                </div>
+                <div class="user" id="user">
+                    <img src="{% static 'customer01.jpg' %}" alt="">
+                </div>
+                
+            </div>
+
+            <!-- ======================= New Ticket ================== -->
+            <div class="details" data-aos="zoom-in">
+                <div class="ticketstatus" style="height: 575px;">
+                    <div class="cardHeader">
+                        <h2>Ticket Details</h2>
+                        <span><ion-icon name="ticket-outline"></ion-icon><sup>+</sup></span>
+                    </div>
+                    {% if messages %} 
+                    {% for message in messages %}
+                    <h3 style="color: #38d39f">{{message}}</h3>
+                    {% endfor %} 
+                    {% endif %}
+                    <form method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="department">Department</label>
+                            <select name="category" class="custom-select mr-sm-2">
+                              <option value="none">Choose...</option>
+                              <option value="Department of Computer Science and Engineering">Computer Science and Engineering</option>
+                              <option value="Department of Computer Science and Engineering">Cyber Security</option>
+                              <option value="Department of Information Technology">Department of Information Technology</option>
+                              <option value="Department of Information Technology">Artificial Intelegent and Data Science</option>
+                              <option value="Department of Electronics and Communication Engineering">Department of Electronics and Communication Engineering</option>
+                              <option value="Department of Electrical and Electronics Engineering">Department of Electrical and Electronics Engineering</option>
+                              <option value="Department of Electronics and Instrumentation Engineering">Department of Electronics and Instrumentation Engineering</option>
+                              <option value="Department of Medical Electronics">Department of Medical Electronics</option>
+                              <option value="Department of Civil Engineering">Department of Civil Engineering</option>
+                              <option value="Department of Civil Engineering">Department of Agriculture Engineering</option>
+                              <option value="Department of Mechanical Engineering">Department of Mechanical Engineering</option>
+                              <option value="Department of Business Management">Master of Business Administration</option>
+                              <option value="Department of General Engineering">Department of General Engineering</option>
+                              <option value="Department of Physics">Department of Physics</option>
+                              <option value="Department of Chemistry">Department of Chemistry</option>
+                              <option value="Department of Mathematics">Department of Mathematics</option>
+                              <option value="Department of English">Department of English</option>
+                              <option value="Department of Placemnet">Department of Placemnet</option>
+                              <option value="Administrative Office">Administrative Office</option>
+                              <option value="Department of Maintenance">Maintenance</option>
+                            </select>
+                            <div class="invalid-feedback">Please select any one of the Department</div>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="location">Location (Lab Name)</label>
+                            <select name="location" class="custom-select mr-sm-2">
+                              <option value="none">Choose...</option>
+                              <option value="CSE Lab1">CSE Lab1</option>
+                              <option value="CSE Lab2">CSE Lab2</option>
+                              <option value="CSE Lab3">CSE Lab3</option>
+                              <option value="CSE Lab4">CSE Lab4</option>
+                              <option value="CSE Lab5">CSE Lab5</option>
+                              <option value="CSE Lab6">CSE Lab6</option>
+                              <option value="CSE Lab7">CSE Lab7</option>
+                              <option value="CSE Server Room">CSE Server Room</option>
+                              <option value="CSE HOD Room">CSE HOD Room</option>
+                              <option value="IT Lab1">IT Lab1</option>
+                              <option value="IT Lab2">IT Lab2</option>
+                              <option value="IT Lab3">IT Lab3</option>
+                              <option value="IT Lab4">IT Lab4</option>
+                              <option value="IT Lab5">IT Lab5</option>
+                              <option value="IT Lab6">IT Lab6</option>
+                              <option value="IT Server Room">IT Server Room</option>
+                              <option value="IT HOD Room">IT HOD Room</option>
+                              <option value="Network Lab">Network Lab</option>
+                              <option value="DSP Lab">DSP Lab</option>
+                              <option value="Microprocessor Lab">Microprocessor Lab</option>
+                              <option value="EDC Lab">EDC Lab</option>
+                              <option value="ESD Lab">ESD Lab</option>
+                              <option value="ECE R&D Lab">ECE R&D Lab</option>
+                              <option value="ECE PG Lab">ECE PG Lab</option>
+                              <option value="ECE R&D Lab">ECE R&D Lab</option>
+                              <option value="ECE Server Room">ECE Server Room</option>
+                              <option value="ECE HOD Room">ECE HOD Room</option>
+                              <option value="EIE VI Lab">EIE VI Lab</option>
+                              <option value="EIE Robotics Lab">EIE Robotics Lab</option>
+                              <option value="EIE R&D Lab">EIE R&D Lab</option>
+                              <option value="EIE FIST Lab">EIE FIST Lab</option>
+                              <option value="EIE Exam Cell">EIE Exam Cell</option>
+                              <option value="EIE HOD Room">EIE HOD Room</option>
+                              <option value="EEE UG Lab">EEE UG Lab</option>
+                              <option value="EEE PG Lab">EEE PG Lab</option>
+                              <option value="EEE Control and Instrumentaion">EEE Control and Instrumentaion Lab</option>
+                              <option value="EEE HOD Room">EEE HOD Room</option>
+                              <option value="EEE R&D">EEE R&D</option>
+                              <option value="Civil UG CADD Lab">Civil UG CADD Lab</option>
+                              <option value="Civil PG CADD Lab">Civil PG CADD Lab</option>
+                              <option value="Civil HOD Room">Civil HOD Room</option>
+                              <option value="Mech CAD CAM Lab">Mech CAD CAM Lab</option>
+                              <option value="Mech Thermal Lab">Mech Thermal Lab</option>
+                              <option value="Mech HOD Room">Mech HOD Room</option>
+                              <option value="MBA Lab1">MBA Lab1</option>
+                              <option value="MBA Lab2">MBA Lab2</option>
+                              <option value="MBA HOD Room">MBA HOD Room</option>
+                              <option value="GE Lab">GE Lab</option>
+                              <option value="GE HOD">GE HOD</option>
+                              <option value="English Communication Lab">English Communication Lab</option>
+                              <option value="English Carrier Guidence Lab">English Carrier Guidence Lab</option>
+                              <option value="Placement HOD / Staff">Placement HOD / Staff</option>
+                              <option value="Physics HOD">Physics HOD</option>
+                              <option value="Physics Staff">Physics Staff</option>
+                              <option value="Chemistry HOD">Chemistry HOD</option>
+                              <option value="Chemistry R&D">Chemistry R&D</option>
+                              <option value="Maths Staff">Maths Staff</option>
+                              <option value="Principal Office">Principal Office</option>
+                              <option value="Admin">Admin Office</option>
+                              <option value="Maintenance">Maintenance</option>
+                              <option value="Physical Director">Physical Director</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <label for="serviceRequried">Service Required</label>
+                              <select name="subfactory" class="custom-select mr-sm-2">
+                                <option value="none">Choose...</option>
+                                <option value="Hardware">Hardware</option>
+                                <option value="Software">Software</option>
+                                <option value="Network">Network</option>
+                              </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label for="tyoeOfItem">Type of Item</label>
+                              <select name="item" class="custom-select mr-sm-2">
+                                <option value="none">Choose...</option>
+                                <option value="CPU">CPU</option>
+                                <option value="Monitor">Monitor</option>
+                                <option value="Laser Printer">Laser Printer</option>
+                                <option value="Dot Matrix Printer">Dot Matrix Printer</option>
+                                <option value="LCD Projector">LCD Projector</option>
+                                <option value="OHP">OHP</option>
+                                <option value="Network Switch">Network Switch</option>
+                                <option value="Network Point">Network Point</option>
+                                <option value="Keyboard / Mouse">Keyboard / Mouse</option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="queries">Queries</label>
+                            <textarea class="form-control" name="queries" rows="2" placeholder="Provide your Queries.." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" name="Description" rows="2" placeholder="Description..." required></textarea>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="text" class="form-control" name="mobileNo"  required>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="priority">Priority</label>
+                            <select name="priority"  class="custom-select mr-sm-2"">
+                              <option value="none">Choose...</option>
+                              <option value="High priority">High priority</option>
+                              <option value="Moderate priority">Moderate priority</option>
+                              <option value="Low priority">Low priority</option>
+                            </select>
+                          </div>
+                        
+                        </div>
+                        <div class="form-row">
+                            <div class="custom-file col-md-6 ">
+                                <input type="file" class="custom-file-input" name="file">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            <div class="form-group col-md-6 mt-1">
+                                <button type="submit" class="btn">Submit</button>
+                            </div>
+                        </div>
+                          
+                      </form>
+                </div>
+
+            </div>
+
+        </div>
+        
+    </div>
+    
+    
+ <!------------------profile modal----------------------->
+ <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" >
+      <div class="modal-header" style="background-color:#292565;">
+        <h5 class="modal-title" id="exampleModalLabel" ><span style="color:white;">Profile</span></h5>
+      </div>
+      <div class="modal-body profile" style="background-color:white; color:black;">
+        <form action="">
+            <h3><span style="color:#292565;">Username:</span> {{ user.username }}</h3>
+            <h3><span style="color:#292565;">Email:</span> {{ user.email }}</h3>
+            <h3><span style="color:#292565;">Phone No:</span> {{ user.mobNo }}</h3>
+            <h3><span style="color:#292565;">Address:</span> {{ user.address }}</h3>
+            <h3><span style="color:#292565;">Designation:</span>{{ user.designation }}</h3>
+        </form>
+      </div>
+      
+      <div class="modal-footer" style="background-color:white;">
+        <div class="cardHeader">
+        
+          <button type="submit" class="btn" data-dismiss="modal" style="background-color:#292565; color:white;">close</button>
+      </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!----------------------------logout modal------------------------->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header" style="background-color:#292565;">
+                  <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Ready to Leave?</h5>
+                  
+                      
+                  </button>
+              </div>
+              <div class="modal-body" style="background-color:white;">Select "Logout" below if you are ready to end your current session.</div>
+              <div class="modal-footer" style="background-color:white;">
+                  <a class="btn" type="button" data-dismiss="modal" style="background-color: #c7c7c7a8; color:black;">Cancel</a>
+                  <a class="btn" href="{% url 'logout' %}" style="background-color:#292565; color:white;">Logout</a>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+    <!-- =========== Scripts =========  -->
+    <script src="assets/js/main.js"></script>
+    <!-- ====== ionicons ======= -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="assets/js/chart-min.js"></script>
+    <script>
+      AOS.init();
+      
+    </script>
+</body>
+
+
+</html>

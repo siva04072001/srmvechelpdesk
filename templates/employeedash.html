@@ -1,0 +1,161 @@
+{% extends 'employeebasic.html' %}
+{% block content %}
+
+<!-- ======================= Cards ================== -->
+<section>
+    <h2 class="section-head">Tickets Status</h2>
+<div class="cardBox">
+    <div class="card" data-aos="flip-left">
+        <div>
+            <div class="numbers">{{ tickets_count }}</div>
+            <div class="cardName">Total Tickets</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="documents-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="card" data-aos="flip-right">
+        <div>
+            <div class="numbers">{{ activetickets }}</div>
+            <div class="cardName">Active Tickets</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="ticket-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="card" data-aos="flip-left">
+        <div>
+            <div class="numbers">{{ closedtickets }}</div>
+            <div class="cardName">Closed Tickets</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="close-circle-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="card" data-aos="flip-right">
+        <div>
+            <div class="numbers">{{ comptickets }}</div>
+            <div class="cardName">Completed Status</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+        </div>
+    </div>
+</div>
+</section>
+<!-- ================ Order Details List ================= -->
+<div class="details">
+    <div class="recentOrders" data-aos="zoom-in">
+        <div class="cardHeader">
+            <h2>Recent Orders</h2>
+            <a href="#" class="btn">View All</a>
+        </div>
+        <canvas id="barchart" width="300" height="125"></canvas>
+    </div>
+
+
+    <!-- ================= New Customers ================ -->
+    <div class="recentCustomers" data-aos="zoom-in">
+        <div class="cardHeader">
+            <h2>Recent Customers</h2>
+        </div>
+        <canvas id="doughchart" width="300" height="300"></canvas>
+    </div>
+</div>
+
+
+<!---------------Charts----------------------->
+    <script>
+        $(document).ready(function(){
+            const ctx = document.getElementById('barchart').getContext('2d');
+    const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Active','Assigned','Completed','Closed','To Do','On Progress','Testing' ],
+        datasets: [{
+            label: '# of Votes',
+            data: [{{ activetickets }},{{ assignedtickets }}, {{ comptickets }}, {{ closedtickets }}, {{ todotickets }}, {{ ontickets }}, {{ testtickets }}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1,
+            hoverOffset:15
+        }]
+    },
+    options: {
+        
+    }
+    });
+        });
+        
+</script>
+<script>  
+    /*---------DOUGH NUT CHART---------*/
+    $(document).ready(function(){
+        const ctx = document.getElementById('doughchart').getContext('2d');
+const myChart = new Chart(ctx, {
+type: 'doughnut',
+data: {
+    labels: ['Active','Assigned','Completed','Closed','To Do','On Progress','Testing' ],
+    datasets: [{
+        label: '# of Votes',
+        data: [{{ activetickets }},{{ assignedtickets }}, {{ comptickets }}, {{ closedtickets }}, {{ todotickets }}, {{ ontickets }}, {{ testtickets }}],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1,
+        hoverOffset:15
+    }]
+},
+options: {
+    
+}
+});
+    });
+</script>
+
+
+
+
+
+
+
+{% endblock content %}
+
+
+
+
+

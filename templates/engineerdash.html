@@ -1,0 +1,339 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!---------end of table--------------->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <!-- semantic UI -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+     <link type="image/png" sizes="16x16" rel="icon" href="{% static 'imgs/icons8-delete-ticket-16.png' %}">
+     <!---AOS-->
+     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+     <!--Chart js-->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+
+<!---manual css-->
+<link href="{% static 'style.css' %}" rel="stylesheet">
+<link href="{% static 'active-ticket.css' %}" rel="stylesheet">
+
+
+
+    </head>
+    
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="desk-container">
+        <div class="desk-navigation">
+            <div class="logo-section">
+                <span class="icon">
+                    <img src="{% static 'SRMVEClogo.png' %}" alt="">
+                </span>
+                <span class="logo-title">SRM VEC DESK</span>
+            </div>
+            <ul>
+                <a data-toggle="modal" data-target="#userModal"><li>
+                    <div class="user">
+                        <img src="{% static 'imgs/customer01.jpg' %}" alt="">
+                    </div>
+                    <div class="user-name">
+                        <p>{{ user.username }}</p>
+                    </div>
+                </li>
+                </a>
+
+                <li>
+                    <a href="{% url 'engineerdash' %}" >
+                        <span class="icon">
+                            <ion-icon name="keypad-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+
+                
+
+                <li>
+                    <a href="{% url 'engineer' %}">
+                        <span class="icon">
+                            <ion-icon name="analytics-outline"></ion-icon>
+                        </span>
+                        <span class="title">Ticket Status</span>
+                    </a>
+                    
+                </li>
+
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#logoutModal">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+ <!------------------profile modal----------------------->
+ <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" >
+        <div class="modal-header" style="background-color:#292565;">
+          <h5 class="modal-title" id="exampleModalLabel" ><span style="color:white;">Profile</span></h5>
+        </div>
+        <div class="modal-body profile" style="background-color:white; color:black;">
+          <form action="">
+              <h3><span style="color:#292565;">Username:</span> {{ user.username }}</h3>
+              <h3><span style="color:#292565;">Email:</span> {{ user.email }}</h3>
+              <h3><span style="color:#292565;">Phone No:</span> {{ user.mobNo }}</h3>
+              <h3><span style="color:#292565;">Address:</span> {{ user.address }}</h3>
+              <h3><span style="color:#292565;">Designation:</span>{{ user.designation }}</h3>
+          </form>
+        </div>
+        
+        <div class="modal-footer" style="background-color:white;">
+          <div class="cardHeader">
+          
+            <button type="submit" class="btn" data-dismiss="modal" style="background-color:#292565; color:white;">close</button>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+</div>
+<!----------------------------logout modal------------------------->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#292565;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Ready to Leave?</h5>
+                    
+                        
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color:white;">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer" style="background-color:white;">
+                    <a class="btn" type="button" data-dismiss="modal" style="background-color: #c7c7c7a8; color:black;">Cancel</a>
+                    <a class="btn" href="{% url 'logout' %}" style="background-color:#292565; color:white;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <!--<div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>-->
+
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+                <div>
+                    <p>Log out</p>
+                </div>
+                <div class="user" id="user">
+                    <img src="assets/imgs/customer01.jpg" alt="">
+                </div>
+                
+            </div>
+
+
+<!-- ======================= Cards ================== -->
+<section>
+    <h2 class="section-head">Tickets Status</h2>
+<div class="cardBox">
+    <div class="card" data-aos="flip-left">
+        <div>
+            <div class="numbers">{{ tickets_count }}</div>
+            <div class="cardName">Total Tickets</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="documents-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="card" data-aos="flip-right">
+        <div>
+            <div class="numbers">{{ activetickets }}</div>
+            <div class="cardName">Active Tickets</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="ticket-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="card" data-aos="flip-left">
+        <div>
+            <div class="numbers">{{ closedtickets }}</div>
+            <div class="cardName">Closed Tickets</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="close-circle-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="card" data-aos="flip-right">
+        <div>
+            <div class="numbers">{{ comptickets }}</div>
+            <div class="cardName">Completed Status</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+        </div>
+    </div>
+</div>
+</section>
+<!-- ================ Order Details List ================= -->
+<div class="details">
+    <div class="recentOrders" data-aos="zoom-in">
+        <div class="cardHeader">
+            <h2>Recent Orders</h2>
+            <a href="#" class="btn">View All</a>
+        </div>
+        <canvas id="barchart" width="300" height="125"></canvas>
+    </div>
+
+
+    <!-- ================= New Customers ================ -->
+    <div class="recentCustomers" data-aos="zoom-in">
+        <div class="cardHeader">
+            <h2>Recent Customers</h2>
+        </div>
+        <canvas id="doughchart" width="300" height="300"></canvas>
+    </div>
+</div>
+
+
+<!---------------Charts----------------------->
+    <script>
+        $(document).ready(function(){
+            const ctx = document.getElementById('barchart').getContext('2d');
+    const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Active','Assigned','Completed','Closed','To Do','On Progress','Testing' ],
+        datasets: [{
+            label: '# of Votes',
+            data: [{{ activetickets }},{{ assignedtickets }}, {{ comptickets }}, {{ closedtickets }}, {{ todotickets }}, {{ ontickets }}, {{ testtickets }}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1,
+            hoverOffset:15
+        }]
+    },
+    options: {
+        
+    }
+    });
+        });
+        
+</script>
+<script>  
+    /*---------DOUGH NUT CHART---------*/
+    $(document).ready(function(){
+        const ctx = document.getElementById('doughchart').getContext('2d');
+const myChart = new Chart(ctx, {
+type: 'doughnut',
+data: {
+    labels: ['Active','Assigned','Completed','Closed','To Do','On Progress','Testing' ],
+    datasets: [{
+        label: '# of Votes',
+        data: [{{ activetickets }},{{ assignedtickets }}, {{ comptickets }}, {{ closedtickets }}, {{ todotickets }}, {{ ontickets }}, {{ testtickets }}],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1,
+        hoverOffset:15
+    }]
+},
+options: {
+    
+}
+});
+    });
+</script>
+
+
+</div>
+        
+</div>
+
+
+
+<!-- =========== Scripts =========  -->
+<script src="assets/js/main.js"></script>
+<!-- ====== ionicons ======= -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="assets/js/chart-min.js"></script>
+<script>
+    AOS.init();
+    
+  </script>
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+

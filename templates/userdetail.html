@@ -1,0 +1,49 @@
+{% extends 'adminbasic.html' %}
+{% block content %}
+
+<div class="active-details">
+  <div class="recentOrders" data-aos="zoom-in">
+      <div class="cardHeader">
+          <h2>User Details</h2>
+          <a href="#" class="btn">View All</a>
+      </div>
+      <table id="myTable1"> 
+          <thead>
+              <tr>
+                  <td>User ID</td>
+                  <td>User Name</td>
+                  <td>Email</td>
+                  <td>Phone No</td>
+                  <td>Address</td>
+                  <td>Designation</td>
+                  <td>Date Joint</td>
+                  <td>Last Login</td>
+              </tr>
+          </thead>
+
+          <tbody>
+            {% for statuse in tickets %}
+            {% if statuse.designation != "superadmin" %}
+              <tr>
+                <th scope="row" style="padding:10px;"> {{ statuse.userId }} </th>
+                <td> {{ statuse.username }} </td>
+                <td> {{ statuse.email }} </td>
+                <td> {{ statuse.mobNo }} </td>
+                <td> {{ statuse.address }} </td>
+                <td> {{ statuse.designation }} </td>
+                <td> {{ statuse.date_joined }} </td>
+                <td> {{ statuse.last_login }} </td>
+              </tr>
+              {% endif %}
+  {% endfor %}
+          </tbody>
+      </table>
+      <script>
+        $(document).ready( function () {
+          $('#myTable1').DataTable();
+      } );
+    </script>
+  </div>
+</div>
+  
+{% endblock %}

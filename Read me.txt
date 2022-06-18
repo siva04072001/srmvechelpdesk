@@ -1,0 +1,32 @@
+step 1: activate environment
+        
+	env1\Scripts\activate
+
+step 2:Run server
+ 	
+	python manage.py runserver
+
+
+
+
+
+
+Superadmin
+username:superadmin
+password:superadmin2001
+
+admin
+username:admin
+password:kumar2001
+
+employee
+username:employee
+password:kumar2001
+
+engineer
+username:engineer
+password:kumar2001
+
+
+Sanjeev-8248497141-IT:2-3rd Year
+Sivakumar-6385555908-IT:2-3rd Year

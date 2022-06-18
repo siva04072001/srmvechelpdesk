@@ -1,0 +1,44 @@
+{% extends 'engineerbasic.html' %}
+{% block content %}
+
+<!-- ======================= Cards ================== -->
+<section>
+  <h2 class="section-head">Tickets Status</h2>
+  
+<div class="cardBox" >
+  {% for statuse in ticket %}
+{% if statuse.status != "closed" %}
+  <a href="{% url 'engdetail_ticket' statuse.Id %}" class="card" data-aos="zoom-in">
+    
+      <div>
+          <div class="cardName" >Ticket Id</div><br>
+          <div class="numbers">{{ statuse.Id }}</div>
+          <br>
+          <p class="details"><span>Username: </span>{{ statuse.username }}</p>
+          
+          <p class="details"><span>Priority: </span>{{ statuse.priority }}</p>
+          <p class="details"><span>Status: </span>{{ statuse.status }}</p>
+          <p class="details"><span>Due Date: </span>{{ statuse.due_date }}</p>
+          
+      </div>
+
+      <div class="iconBx">
+          <ion-icon name="ticket-outline" ></ion-icon>
+      </div>
+  </a>
+  {% endif %}
+  {% endfor %}
+</div>
+  
+
+
+</section>
+
+
+{% endblock %}
+
+
+
+
+
+

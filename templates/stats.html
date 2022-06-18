@@ -1,0 +1,149 @@
+{% extends 'adminbasic.html' %}
+{% block content %}
+
+            <!-- ======================= Cards ================== -->
+            <section>
+                <h2 class="section-head">Tickets Handled</h2>
+                <div class="cardBox">
+                    <div class="card" data-aos="flip-left">
+                        <div>
+                            <div class="numbers">{{ usercount }}</div>
+                            <div class="cardName">vivek</div>
+                        </div>
+    
+                        
+                    </div>
+    
+                    <div class="card" data-aos="flip-right">
+                        <div>
+                            <div class="numbers">{{ user1count }}</div>
+                            <div class="cardName">Engineer1</div>
+                        </div>
+    
+                        
+                    </div>
+    
+                    <div class="card" data-aos="flip-left">
+                        <div>
+                            <div class="numbers">{{ user2count }}</div>
+                            <div class="cardName">Engineer2</div>
+                        </div>
+    
+                        
+                    </div>
+    
+                    <div class="card" data-aos="flip-right">
+                        <div>
+                            <div class="numbers">{{ user3count }}</div>
+                            <div class="cardName">Engineer3</div>
+                        </div>
+    
+                        
+                    </div>
+                </div>
+            </section>
+    
+                <!-- ================ Order Details List ================= -->
+                <div class="details">
+                    <div class="recentOrders" data-aos="zoom-in">
+                        <div class="cardHeader">
+                            <h2>Line Chart</h2>
+                            <a href="#" class="btn">View All</a>
+                        </div>
+                        <canvas id="myChart1" width="400" height="150"></canvas>
+    
+                    </div>
+
+                    <!-- ================= New Customers ================ -->
+                    <div class="recentCustomers" data-aos="zoom-in">
+                        <div class="cardHeader">
+                            <h2>Pie Chart</h2>
+                        </div>
+                        <canvas id="myChart5" width="400" height="270"></canvas>
+                    </div>
+                </div>        
+
+
+
+
+ <!--pie chart-->
+ <script>
+    $(document).ready(function(){
+        const ctx = document.getElementById('myChart5').getContext('2d');
+const myChart = new Chart(ctx, {
+type: 'pie',
+data: {
+    labels: ['vivek','engineer1','engineer2','engineer3' ],
+    datasets: [{
+        label: '# of Votes',
+        data: [{{ usercount }}, {{ user1count }}, {{ user2count }},{{ user3count }}],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1,
+        hoverOffset:15
+    }]
+},
+options: {
+    
+}
+});
+    });
+</script>
+
+
+<!--area chart-->
+<script>
+    $(document).ready(function(){
+        const ctx = document.getElementById('myChart1').getContext('2d');
+const myChart = new Chart(ctx, {
+type: 'line',
+data: {
+    labels: ['vivek','engineer1','engineer2','engineer3' ],
+    datasets: [{
+        label: 'status',
+        data: [{{ usercount }},{{ user1count }},{{ user2count }},{{ user3count }}],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+    }]
+},
+options: {
+    scales: {
+        y: {
+            beginAtZero: true
+        }
+    }
+}
+});
+    });
+</script>
+
+{% endblock %}

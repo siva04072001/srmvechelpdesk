@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'employee-ticket-details.css' %}">
+     <!-- semantic UI -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+     <link type="image/png" sizes="16x16" rel="icon" href=".../icons8-delete-ticket-16.png">
+     <!---AOS-->
+     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+     
+     <!--Chart js-->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh5 style="color:#31A5DE"U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+</head>
+
+<body>
+<!-- =============== Navigation ================ -->
+<div class="desk-container">
+    <div class="desk-navigation">
+        <div class="logo-section">
+            <span class="icon">
+                <img src="{% static 'SRMVEClogo.png' %}" alt="">
+            </span>
+            <span class="logo-title">SRM VEC DESK</span>
+        </div>
+        <ul>
+            <a data-toggle="modal" data-target="#userModal"><li>
+                <div class="user">
+                    <img src="{% static 'imgs/customer01.jpg' %}" alt="">
+                </div>
+                <div class="user-name">
+                    <p>{{ user.username }}</p>
+                </div>
+            </li>
+            </a>
+
+            <li>
+                <a href="{% url 'admin' %}" >
+                    <span class="icon">
+                        <ion-icon name="keypad-outline"></ion-icon>
+                    </span>
+                    <span class="title">Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'admintable' %}">
+                    <span class="icon">
+                        <ion-icon name="ticket-outline"></ion-icon>
+                    </span>
+                    <span class="title">Active Tickets</span>
+                </a>
+                
+            </li>
+
+            <li>
+                <a href="{% url 'adminclosed' %}">
+                    <span class="icon">
+                        <ion-icon name="close-circle-outline"></ion-icon>
+                    </span>
+                    <span class="title">Closed Tickets</span>
+                </a>
+                
+            </li>
+
+            <li>
+                <a href="{% url 'user_detail' %}">
+                    <span class="icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </span>
+                    <span class="title">User Details</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'stats' %}">
+                    <span class="icon">
+                        <ion-icon name="stats-chart-outline"></ion-icon>
+                    </span>
+                    <span class="title">Engineer Stats</span>
+                </a>
+            </li>
+
+            <li>
+              <a href="#" data-toggle="modal" data-target="#logoutModal">
+                  <span class="icon">
+                      <ion-icon name="log-out-outline"></ion-icon>
+                  </span>
+                  <span class="title">Logout</span>
+              </a>
+          </li>
+        </ul>
+    </div>
+
+    <!-- ========================= Main ==================== -->
+    <div class="main">
+        <div class="topbar">
+            <!--<div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>-->
+
+
+            <div class="search">
+                <label>
+                    <input type="text" name="sbar" placeholder="Search here">
+                    <ion-icon name="search-outline"></ion-icon>
+                    
+                </label>
+            </div>
+            <div>
+                <p>Log out</p>
+            </div>
+            <div class="user" id="user">
+                <img src="{% static 'imgs/customer01.jpg' %}" alt="">
+            </div>
+            
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!------------------profile modal----------------------->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" >
+        <div class="modal-header" style="background-color:#292565;">
+          <h5 class="modal-title" id="exampleModalLabel" ><span style="color:white;">Profile</span></h5>
+        </div>
+        <div class="modal-body profile" style="background-color:white; color:black;">
+          <form action="">
+              <h3><span style="color:#292565;">Username:</span> {{ user.username }}</h3>
+              <h3><span style="color:#292565;">Email:</span> {{ user.email }}</h3>
+              <h3><span style="color:#292565;">Phone No:</span> {{ user.mobNo }}</h3>
+              <h3><span style="color:#292565;">Address:</span> {{ user.address }}</h3>
+              <h3><span style="color:#292565;">Designation:</span>{{ user.designation }}</h3>
+          </form>
+        </div>
+        
+        <div class="modal-footer" style="background-color:white;">
+          <div class="cardHeader">
+          
+            <button type="submit" class="btn" data-dismiss="modal" style="background-color:#292565; color:white;">close</button>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+</div>
+<!----------------------------logout modal------------------------->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#292565;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Ready to Leave?</h5>
+                    
+                        
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color:white;">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer" style="background-color:white;">
+                    <a class="btn" type="button" data-dismiss="modal" style="background-color: #c7c7c7a8; color:black;">Cancel</a>
+                    <a class="btn" href="{% url 'logout' %}" style="background-color:#292565; color:white;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="details" data-aos="zoom-in">
+        <div class="ticketstatus">
+            <div class="cardHeader">
+                <h2>Report Details</h2>
+                <ion-icon name="ticket-outline"></ion-icon>
+            </div>
+            <h2 class="cardName-details">Ticket Id</h2>
+            <h2 class="numbers-details">{{ item.Id }}</h2>
+            
+            
+        
+                <div class="d-flex flex-nowrap">
+                <div class="order-1 p-2">
+                <h5 style="color:#31A5DE"> Issue Reported:  <span style="color:#292565;">{{ item.issueReport }}</span></h5> 
+                <h5 style="color:#31A5DE"> cause for the problem/Incident: <span style="color:#292565;">{{ item.causeProb }}</span> </h5>
+                </div>
+                <div class="order-2 p-2">
+                <h5 style="color:#31A5DE"> Problem/Incident Description: <span style="color:#292565;">{{ item.problemDesc }}</span> </h5>
+                <h5 style="color:#31A5DE"> Solution Given: <span style="color:#292565;">{{ item.solGiven }}</span></h5> 
+                
+            </div>
+              
+            </div>
+            <h5 style="color:#31A5DE"> Notes: <span style="color:#292565;">{{ item.notes }}</span> </h5>
+        
+                
+        </div>
+
+        <!-- ================= New Customers ================ -->
+        <!--<div class="ticketstatus2">
+            <div class="cardHeader">
+                <h2>Recent Customers</h2>
+            </div>
+            <canvas id="doughChart" width="300" height="150"></canvas>
+        </div>-->
+    </div>
+    
+    
+</div>
+
+</div>
+
+
+
+<!-- =========== Scripts =========  -->
+
+<!-- ====== ionicons ======= -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script>
+AOS.init();
+
+</script>
+</body>
+
+
+</html>

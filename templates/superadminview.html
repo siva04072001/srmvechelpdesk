@@ -1,0 +1,48 @@
+{% extends 'superadminbasic.html' %}
+{% block content %}
+<div class="active-details">
+  <div class="recentOrders" data-aos="zoom-in">
+      <div class="cardHeader">
+          <h2>User Details</h2>
+          <a href="#" class="btn">View All</a>
+      </div>
+      <table id="myTable1"> 
+          <thead>
+              <tr>
+                  <td>User ID</td>
+                  <td>User Name</td>
+                  <td>Email</td>
+                  <td>Phone No</td>
+                  <td>Address</td>
+                  <td>Designation</td>
+                  <th>update</th>
+                  <th>delete</th>
+              </tr>
+          </thead>
+
+          <tbody>
+            {% for statuse in user %}
+            {% if statuse.designation != "superadmin" %}
+              <tr>
+                <th scope="row" style="padding:10px;"> {{ statuse.userId }} </th>
+                <td> {{ statuse.username }} </td>
+                <td> {{ statuse.email }} </td>
+                <td> {{ statuse.mobNo }} </td>
+                <td> {{ statuse.address }} </td>
+                <td> {{ statuse.designation }} </td>
+                <td> <a type="button" class="assign" style="color:white;" href="{% url 'assign_user' statuse.userId %}">update</a> </td>
+                <td> <a type="button" class="ticket-close"  href="{% url 'delete_user' statuse.userId %}">delete</a> </td>
+              </tr>
+              {% endif %}
+  {% endfor %}
+          </tbody>
+      </table>
+      <script>
+        $(document).ready( function () {
+          $('#myTable1').DataTable();
+      } );
+    </script>
+  </div>
+</div>
+
+{% endblock %}

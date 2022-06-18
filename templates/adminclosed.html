@@ -1,0 +1,57 @@
+{% extends 'adminbasic.html' %}
+{% block content %}
+<div class="active-details">
+  <div class="recentOrders" data-aos="zoom-in">
+      <div class="cardHeader">
+          <h2>Closed Tickets</h2>
+          <a href="#" class="btn">View All</a>
+      </div>
+      <table> 
+          <thead>
+              <tr>
+                  <td>Ticket ID</td>
+                  <td>Queries</td>
+                  <td>Requester</td>
+                  <td>Assigned To</td>
+                  <td>Created Date</td>
+                  <td>Due Date</td>
+                  <td>Status</td>
+              </tr>
+          </thead>
+
+          <tbody>
+            {% for statuse in tickets %}
+            {% if statuse.status == "closed" %}
+              <tr>
+                <th scope="row"> {{ statuse.Id }} </th>
+                <td> {{ statuse.queries }} </td>
+                <td> {{ statuse.username }} </td>
+                <td> {{ statuse.assigned }} </td>
+                <td> {{ statuse.assigned_date }} </td>
+                <td> {{ statuse.due_date }} </td>
+                {% if statuse.status == 'closed' %}
+                <td><span class="active-status closed">{{ statuse.status }}</span></td>
+                {% endif %}
+                
+              </tr>
+              {% endif %}
+  {% endfor %}
+
+          </tbody>
+      </table>
+      <select name="">
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+      </select>
+      <br>
+      <br>
+      <ul class="pagination">
+      <li class="prev" ><a href="#" id="prev">&#139;prev</a></li>
+      <li class="next" ><a href="#" id="next">next&#155;</a></li>
+      </ul>
+  </div>
+  </div>
+</div>
+ {% endblock %}

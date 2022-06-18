@@ -1,0 +1,92 @@
+{% extends 'superadminbasic.html' %}
+{% block content %}
+
+<!-- ======================= New Ticket ================== -->
+<div class="details">
+  <div class="ticketstatus" style="height: 475px;">
+      <div class="cardHeader">
+          <h2>Ticket Details</h2>
+          <ion-icon name="person-add-outline"></ion-icon>
+      </div>
+      {% if messages %}
+                {% for message in messages %}
+                <h3 style="color:#38d39f;"> {{message}} </h3>
+                {% endfor %}
+              {% endif %}
+              <form  method="post">
+                {% csrf_token %}
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                  <label for="userId">User Id</label>
+                  {{ form.userId }}
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="userName">User Name</label>
+                  {{ form.username }}
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                  <label for="phoneNumber">Phone Number</label>
+                  {{ form.mobNo }}
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="phoneNumber">E-Mail</label>
+                  {{ form.email}}
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                  <label for="password">Password</label>
+                  {{ form.password1 }}
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="confirmPassword">Confirm Password</label>
+                  {{ form.password2 }}
+              </div>
+              
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="confirmPassword">
+                Address
+              </label>
+              {{ form.address }}
+            </div>
+            <div class="form-group col-md-6">
+              <label for="confirmPassword">Designation</label>
+              {{ form.designation }}
+            </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-2">
+                {{ form.is_admin }}
+                <label for="admin">Admin</label>
+              </div>
+              <div class="form-group col-md-2">
+                {{ form.is_employee }}
+                  <label for="employee">Employee</label>
+              </div>
+              <div class="form-group col-md-2">
+                {{ form.is_engineer }}
+                  <label for="engineer">Engineer</label>
+              </div>
+              <span class="text-error">{{ form.errors }}</span>
+              <div class="form-group col-md-6">
+                  <button type="submit" class="btn">Submit</button>
+              </div>
+          </div>
+          
+            
+        </form>
+  </div>
+
+</div>
+
+
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,46 @@
+{% extends 'adminbasic.html' %} 
+{% block content %}
+<div class="active-details">
+  <div class="recentOrders" data-aos="zoom-in">
+      <div class="cardHeader">
+          <h2>Assign Tickets</h2>
+          
+      </div><br>
+      <!-- Card Header - Dropdown -->
+      <!-- Card Body -->
+      
+          {% if messages %} 
+          {% for message in messages %}
+          <h3 style="color: #38d39f">{{message}}</h3>
+          {% endfor %} 
+          {% endif %}
+          {% if item %}
+
+          <form method="POST" action="{% url 'update_ticket' item.Id %}">
+            {% csrf_token %}
+            <label for="">Due Date</label>
+            <input type="date" class="form-control" name="due_date" value="{{item.due_date}}" /><br>
+            <label for="">Assign To</label>
+            <select name="assigned" class="form-control" value="{{item.assigned}}">
+              <option value="none">Choose...</option>
+              {% for engineer in eng %}
+              {% if engineer.is_engineer %}
+              <option value="{{engineer.username}}">{{engineer.username}}</option>
+              {% endif %}
+              {% endfor %}
+            </select><br>
+            <label for="">Troubleshoot</label>
+            <textarea class="form-control" name="admindesc" placeholder="Troubleshoot Description" value="{{item.admindesc}}"></textarea>
+            <br>
+            <div class="cardHeader">
+              
+              <button type="submit" class="btn">submit</button>
+          </div>
+            
+        </form>
+         
+        
+      {% endif %}
+      </div>
+    </div>
+{% endblock %}

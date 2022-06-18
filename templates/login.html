@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width ,initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+     <!-- semantic UI -->
+     <!------aos------->
+     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body>
+    <section class="grid-container">
+        <div class="grid-item1">
+            <div class="clg-title">
+                <div class="logo">
+                    <img src="{% static 'SRMVEClogo.png' %}" alt="" class="logo1">
+                </div>
+                <div class="title">
+                    <h2>SRM Valliammai Engineering College</h2>
+                    <h4>( AN AUTONOMOUS INSTITUTION )</h4>
+                </div>
+                <div class="logo">
+                    <img src="{% static 'imgs/group.png' %}" alt="" class="logo2">
+                </div>
+            </div>
+            <div class="clg-body">
+                <h1>
+                    Welcome!!
+                </h1>
+                <p data-aos="fade-up">Welcome to SRM VEC Desk!! Our Desk provides vital support for Staffs and Engineers, complementing Technical Support.This gives essential support for technical team and staffs to maintain the college system in greater way !!</p>
+            </div>
+        </div>
+        <div class="grid-item2">
+          
+          <form  method="post">
+            {% csrf_token %}
+                <h2>LOGIN</h2>
+                <span class="mb-0 text-muted">
+                  {% if msg %}
+                      {{ msg | safe }}
+                  {% else %}
+                      
+                  {% endif %}
+                </span><br>
+                <label for="username">User Name</label>
+                {{ form.username }}
+                <label for="password">Password</label>
+                {{ form.password }}
+                <button value="Log In" type="submit">Log In</button>
+            </form>
+        </div>
+    </section>
+    <script>
+      AOS.init();
+      
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

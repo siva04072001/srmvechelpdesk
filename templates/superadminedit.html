@@ -1,0 +1,78 @@
+{% extends 'superadminbasic.html' %}
+{% block content %}
+
+
+<!-- ======================= New Ticket ================== -->
+<div class="details">
+  <div class="ticketstatus" style="height: 475px;">
+      <div class="cardHeader">
+          <h2>Ticket Details</h2>
+          <ion-icon name="person-add-outline"></ion-icon>
+      </div>
+      {% if messages %}
+                {% for message in messages %}
+                <h3 style="color:#38d39f;"> {{message}} </h3>
+                {% endfor %}
+              {% endif %}
+              <form  method="POST" action="{% url 'update_user' item.userId %}">
+                {% csrf_token %}
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                  <label for="userId">User Id</label>
+                  {{item.userId}}
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="userName">User Name</label>
+                  {{item.username}}
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                  <label for="phoneNumber">Phone Number</label>
+                  <input type="text" class="form-control" name="mobNo" value="{{item.mobNo}}">
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="phoneNumber">E-Mail</label>
+                  <input type="text" class="form-control" name="email" value="{{item.email}}">
+              </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="confirmPassword">
+                Address
+              </label>
+              <input type="text" class="form-control" name="address" value="{{item.address}}">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="confirmPassword">Designation</label>
+              <input type="text" class="form-control" name="designation" value="{{item.designation}}">
+            </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-2">
+                
+              </div>
+              <div class="form-group col-md-2">
+                
+              </div>
+              <div class="form-group col-md-2">
+                
+              </div>
+              <span class="text-error">{{ form.errors }}</span>
+              <div class="form-group col-md-6">
+                  <button type="submit" class="btn">Submit</button>
+              </div>
+          </div>
+          
+            
+        </form>
+  </div>
+
+</div>
+
+
+
+
+
+{% endblock %}
